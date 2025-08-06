@@ -11,7 +11,7 @@ function createWindow() {
       preload: path.join(__dirname, 'preload.js'),
       webviewTag: true,
       webSecurity: true,
-      allowRunningInsecureContent: false
+      allowRunningInsecureContent: true
     },
     show: false
   });
