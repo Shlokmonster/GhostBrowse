@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modern Browser Interface</title>
+    <script src="https://cdn.tailwindcss.com/3.4.16"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#3b82f6',
+                        secondary: '#6366f1'
+                    },
+                    borderRadius: {
+                        'none': '0px',
+                        'sm': '4px',
+                        DEFAULT: '8px',
+                        'md': '12px',
+                        'lg': '16px',
+                        'xl': '20px',
+                        '2xl': '24px',
+                        '3xl': '32px',
+                        'full': '9999px',
+                        'button': '8px'
+                    },
+                    fontFamily: {
+                        'inter': ['Inter', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        :where([class^="ri-"])::before {
+            content: "\f3c2";
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        
+        .glass-effect {
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
+        
+        .neumorphic {
+            box-shadow: 
+                8px 8px 16px rgba(0, 0, 0, 0.1),
+                -8px -8px 16px rgba(255, 255, 255, 0.8);
+        }
+        
+        .neumorphic-dark {
+            box-shadow: 
+                8px 8px 16px rgba(0, 0, 0, 0.3),
+                -8px -8px 16px rgba(255, 255, 255, 0.05);
+        }
+        
+        .glow {
+            box-shadow: 0 0 20px rgba(59, 130, 246, 0.3);
+        }
+        
+        .tab-active {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.1));
+            border-bottom: 2px solid #3b82f6;
+        }
+        
+        .loading-bar {
+            background: linear-gradient(90deg, #3b82f6, #6366f1, #8b5cf6);
+            background-size: 200% 100%;
+            animation: loading 2s ease-in-out infinite;
+        }
+        
+        @keyframes loading {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+        
+        .hover-scale {
+            transition: transform 0.2s ease;
+        }
+        
+        .hover-scale:hover {
+            transform: scale(1.05);
+        }
+        
+        .theme-light {
+            background: linear-gradient(135deg, #f8fafc, #e2e8f0);
+        }
+        
+        .theme-dark {
+            background: linear-gradient(135deg, #1a1a1a, #2d2d2d);
+        }
+        
+        .address-bar-focus {
+            box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.3), 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        
+        .tab-hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateY(-1px);
+        }
+    </style>
+</head>
+<body class="theme-light min-h-screen font-inter">
+    <div class="browser-window w-full h-screen flex flex-col">
+        <!-- Header Section -->
+        <header class="flex items-center justify-between px-4 py-3 glass-effect bg-white/80 border-b border-gray-200/50">
+            <!-- Left Controls -->
+            <div class="flex items-center space-x-3">
+                <!-- Favicon -->
+                <div class="w-6 h-6 flex items-center justify-center">
+                    <div class="w-4 h-4 bg-gradient-to-br from-blue-500 to-purple-600 rounded-sm"></div>
+                </div>
+                
+                <!-- Navigation Controls -->
+                <div class="flex items-center space-x-2">
+                    <button class="w-8 h-8 flex items-center justify-center rounded-full hover-scale neumorphic bg-gray-50 hover:bg-gray-100 transition-all duration-200">
+                        <i class="ri-arrow-left-line text-gray-600 text-sm"></i>
+                    </button>
+                    <button class="w-8 h-8 flex items-center justify-center rounded-full hover-scale neumorphic bg-gray-50 hover:bg-gray-100 transition-all duration-200">
+                        <i class="ri-arrow-right-line text-gray-600 text-sm"></i>
+                    </button>
+                    <button class="w-8 h-8 flex items-center justify-center rounded-full hover-scale neumorphic bg-gray-50 hover:bg-gray-100 transition-all duration-200">
+                        <i class="ri-refresh-line text-gray-600 text-sm"></i>
+                    </button>
+                </div>
+                
+                <!-- Home & New Tab -->
+                <div class="flex items-center space-x-2 ml-2">
+                    <button class="w-8 h-8 flex items-center justify-center rounded-full hover-scale neumorphic bg-gray-50 hover:bg-gray-100 transition-all duration-200">
+                        <i class="ri-home-line text-gray-600 text-sm"></i>
+                    </button>
+                    <button class="w-8 h-8 flex items-center justify-center rounded-full hover-scale neumorphic bg-gray-50 hover:bg-gray-100 transition-all duration-200">
+                        <i class="ri-add-line text-gray-600 text-sm"></i>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Central Address Bar -->
+            <div class="flex-1 max-w-2xl mx-8">
+                <div class="relative">
+                    <input 
+                        type="text" 
+                        placeholder="Search or enter website URL"
+                        class="w-full px-6 py-3 rounded-md glass-effect bg-white/60 border border-gray-200/50 text-gray-700 placeholder-gray-500 focus:outline-none focus:address-bar-focus transition-all duration-200 text-sm font-medium"
+                        value="https://example.com"
+                    >
+                    <div class="absolute right-3 top-1/2 transform -translate-y-1/2">
+                        <button class="w-6 h-6 flex items-center justify-center rounded-full hover:bg-gray-100 transition-colors">
+                            <i class="ri-search-line text-gray-500 text-sm"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Right Controls -->
+            <div class="flex items-center space-x-3">
+                <button class="w-8 h-8 flex items-center justify-center rounded-full hover-scale neumorphic bg-gray-50 hover:bg-gray-100 transition-all duration-200">
+                    <i class="ri-bookmark-line text-gray-600 text-sm"></i>
+                </button>
+                
+                <!-- Theme Toggle -->
+                <button id="theme-toggle" class="w-8 h-8 flex items-center justify-center rounded-full hover-scale neumorphic bg-gray-50 hover:bg-gray-100 transition-all duration-200">
+                    <i class="ri-sun-line text-gray-600 text-sm"></i>
+                </button>
+                
+                <!-- Profile -->
+                <div class="w-8 h-8 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center hover-scale cursor-pointer">
+                    <span class="text-white text-xs font-medium">JD</span>
+                </div>
+                
+                <!-- Settings -->
+                <div class="relative">
+                    <button id="settings-btn" class="w-8 h-8 flex items-center justify-center rounded-full hover-scale neumorphic bg-gray-50 hover:bg-gray-100 transition-all duration-200">
+                        <i class="ri-more-2-line text-gray-600 text-sm"></i>
+                    </button>
+                    <div id="settings-dropdown" class="absolute right-0 top-full mt-2 w-48 glass-effect bg-white/90 rounded-lg border border-gray-200/50 shadow-xl hidden">
+                        <div class="py-2">
+                            <a href="#" class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100/50">
+                                <i class="ri-settings-line w-4 h-4 mr-3"></i>
+                                Settings
+                            </a>
+                            <a href="#" class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100/50">
+                                <i class="ri-history-line w-4 h-4 mr-3"></i>
+                                History
+                            </a>
+                            <a href="#" class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100/50">
+                                <i class="ri-download-line w-4 h-4 mr-3"></i>
+                                Downloads
+                            </a>
+                            <hr class="my-1 border-gray-200/50">
+                            <a href="#" class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100/50">
+                                <i class="ri-information-line w-4 h-4 mr-3"></i>
+                                About
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+        
+        <!-- Tab Strip -->
+        <div class="tab-strip flex items-center px-4 py-1 glass-effect bg-white/60 border-b border-gray-200/30">
+            <div class="flex items-center space-x-1 flex-1 overflow-x-auto">
+                <!-- Active Tab -->
+                <div class="tab-active flex items-center px-4 py-2 rounded-t-lg min-w-0 max-w-64 group cursor-pointer">
+                    <div class="w-4 h-4 flex items-center justify-center mr-2">
+                        <i class="ri-global-line text-gray-500 text-xs"></i>
+                    </div>
+                    <span class="text-sm font-medium text-gray-700 truncate flex-1">New Tab</span>
+                    <button class="w-4 h-4 flex items-center justify-center ml-2 opacity-0 group-hover:opacity-100 hover:bg-gray-200 rounded-full transition-all">
+                        <i class="ri-close-line text-xs text-gray-500"></i>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- New Tab Button -->
+            <button id="new-tab-btn" class="w-8 h-8 flex items-center justify-center rounded-full hover-scale bg-gray-100 hover:bg-gray-200 transition-all ml-2">
+                <i class="ri-add-line text-gray-600 text-sm"></i>
+            </button>
+        </div>
+        
+        <!-- Loading Bar -->
+        <div id="loading-bar" class="loading-bar h-1 w-0 transition-all duration-300"></div>
+        
+        <!-- Main Content Area -->
+        <main class="flex-1 overflow-hidden flex flex-col">
+            <webview id="webview" class="flex-1 w-full" src="https://www.google.com" webpreferences="nodeIntegration=no, contextIsolation=yes"></webview>
+        </main>
+                        <div>
+                            
+                        </div>
+                        <div>
+                       
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script id="theme-toggle-script">
+        document.addEventListener('DOMContentLoaded', function() {
+            const themeToggle = document.getElementById('theme-toggle');
+            const body = document.body;
+            let isDark = false;
+            
+            themeToggle.addEventListener('click', function() {
+                isDark = !isDark;
+                
+                if (isDark) {
+                    body.classList.remove('theme-light');
+                    body.classList.add('theme-dark');
+                    themeToggle.querySelector('i').className = 'ri-moon-line text-gray-300 text-sm';
+                } else {
+                    body.classList.remove('theme-dark');
+                    body.classList.add('theme-light');
+                    themeToggle.querySelector('i').className = 'ri-sun-line text-gray-600 text-sm';
+                }
+            });
+        });
+    </script>
+
+    <script id="settings-dropdown-script">
+        document.addEventListener('DOMContentLoaded', function() {
+            const settingsBtn = document.getElementById('settings-btn');
+            const settingsDropdown = document.getElementById('settings-dropdown');
+            
+            settingsBtn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                settingsDropdown.classList.toggle('hidden');
+            });
+            
+            document.addEventListener('click', function() {
+                settingsDropdown.classList.add('hidden');
+            });
+        });
+    </script>
+
+    <script id="loading-simulation-script">
+        document.addEventListener('DOMContentLoaded', function() {
+       
+            
+            function simulateLoading() {
+                loadingBar.style.width = '0%';
+                loadingBar.style.height = '2px';
+                
+                setTimeout(() => {
+                    loadingBar.style.width = '30%';
+                }, 100);
+                
+                setTimeout(() => {
+                    loadingBar.style.width = '70%';
+                }, 500);
+                
+                setTimeout(() => {
+                    loadingBar.style.width = '100%';
+                }, 1000);
+                
+                setTimeout(() => {
+                    loadingBar.style.width = '0%';
+                    loadingBar.style.height = '0px';
+                }, 1200);
+            }
+            
+            const webview = document.getElementById('webview');
+            const urlInput = document.querySelector('input[type="text"]');
+            const loadingBar = document.querySelector('.loading-bar');
+            
+            // Handle URL navigation
+            function navigateToUrl() {
+                let url = urlInput.value.trim();
+                if (!url) return;
+                
+                // Add https:// if no protocol is specified
+                if (!/^https?:\/\//i.test(url)) {
+                    url = 'https://' + url;
+                }
+                
+                webview.src = url;
+            }
+            
+            // Handle Enter key in address bar
+            urlInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    navigateToUrl();
+                }
+            });
+            
+            // Update address bar when page loads
+            webview.addEventListener('did-navigate', (e) => {
+                urlInput.value = e.url;
+            });
+            
+            // Show loading progress
+            webview.addEventListener('did-start-loading', () => {
+                loadingBar.classList.remove('w-0');
+                loadingBar.classList.add('w-full');
+            });
+            
+            webview.addEventListener('did-stop-loading', () => {
+                loadingBar.classList.remove('w-full');
+                loadingBar.classList.add('w-0');
+            });
+            
+            // Handle navigation buttons
+            document.getElementById('back-btn').addEventListener('click', () => {
+                if (webview.canGoBack()) {
+                    webview.goBack();
+                }
+            });
+            
+            document.getElementById('forward-btn').addEventListener('click', () => {
+                if (webview.canGoForward()) {
+                    webview.goForward();
+                }
+            });
+            
+            document.getElementById('refresh-btn').addEventListener('click', () => {
+                webview.reload();
+            });
+            
+            document.querySelectorAll('button').forEach(btn => {
+                if (btn.querySelector('.ri-refresh-line')) {
+                    btn.addEventListener('click', simulateLoading);
+                }
+            });
+        });
+    </script>
+
+    <script id="time-update-script">
+        document.addEventListener('DOMContentLoaded', function() {
+            function updateTime() {
+                const now = new Date();
+                const timeString = now.toLocaleTimeString('en-US', {
+                    hour: 'numeric',
+                    minute: '2-digit',
+                    hour12: true
+                });
+                document.getElementById('current-time').textContent = timeString;
+            }
+            
+            updateTime();
+            setInterval(updateTime, 1000);
+        });
+    </script>
+</body>
+</html>
